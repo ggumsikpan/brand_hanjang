@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>브랜드한장 — 상세페이지 해결사</title>
+<meta name="description" content="매출이 안 나오는 진짜 이유, 디자인이 아니라 구조입니다. 15년 차 UX 기획자가 사업의 방향부터 잡아드립니다.">
+<style>
+/* ══ Reset & Base ══ */
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color:#1A1A1A; background:#FAFAFA; line-height:1.75; word-break:keep-all;
+    -webkit-font-smoothing:antialiased;
+}
+a { text-decoration:none; color:inherit; }
+img { max-width:100%; display:block; }
+
+/* ══ Variables ══ */
+:root {
+    --ink: #1A1A1A;
+    --ink-soft: #3A3A3A;
+    --gray: #777;
+    --gray-lt: #AAA;
+    --line: #E5E5E5;
+    --warm: #F5F3EF;
+    --accent: #2C5F2D;
+    --accent-light: #EEF4EE;
+    --paper: #FFFFFF;
+    --max-w: 720px;
+}
+
+/* ══ Utility ══ */
+.inner { max-width:var(--max-w); margin:0 auto; padding:0 24px; }
+
+/* ══ Navigation ══ */
+nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(250,250,250,.92); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+    padding:16px 24px;
+    display:flex; justify-content:space-between; align-items:center;
+}
+.nav-brand {
+    font-size:1.05em; font-weight:800; color:var(--ink);
+    letter-spacing:-.5px;
+}
+.nav-brand span { color:var(--accent); }
+.nav-cta {
+    background:var(--ink); color:#fff;
+    border:none; border-radius:6px;
+    padding:9px 20px; font-size:.85em; font-weight:700;
+    cursor:pointer; font-family:inherit; transition:opacity .2s;
+}
+.nav-cta:hover { opacity:.8; }
+
+/* ══ Section Common ══ */
+section { padding:100px 0; }
+.section-label {
+    font-size:.75em; font-weight:700; letter-spacing:2px;
+    color:var(--accent); text-transform:uppercase; margin-bottom:14px;
+}
+.section-title {
+    font-size:1.8em; font-weight:800; line-height:1.4;
+    color:var(--ink); margin-bottom:20px; letter-spacing:-.5px;
+}
+.section-desc {
+    font-size:1em; color:var(--ink-soft); line-height:1.9;
+    max-width:560px;
+}
+
+/* ══ Hero ══ */
+.hero {
+    padding:160px 0 120px;
+    background:var(--warm);
+    text-align:center;
+}
+.hero-badge {
+    display:inline-block;
+    background:var(--accent-light); color:var(--accent);
+    font-size:.78em; font-weight:700;
+    padding:6px 16px; border-radius:50px;
+    margin-bottom:28px; letter-spacing:.5px;
+}
+.hero h1 {
+    font-size:2.4em; font-weight:900; line-height:1.35;
+    color:var(--ink); margin-bottom:22px; letter-spacing:-1px;
+}
+.hero h1 em {
+    font-style:normal;
+    background:linear-gradient(transparent 60%, rgba(44,95,45,.15) 60%);
+}
+.hero-sub {
+    font-size:1.05em; color:var(--ink-soft); line-height:1.9;
+    margin-bottom:40px; max-width:520px; margin-left:auto; margin-right:auto;
+}
+.hero-cta {
+    display:inline-block;
+    background:var(--accent); color:#fff;
+    border:none; border-radius:8px;
+    padding:16px 36px; font-size:1em; font-weight:700;
+    cursor:pointer; font-family:inherit;
+    transition:transform .2s, box-shadow .2s;
+    box-shadow:0 4px 16px rgba(44,95,45,.2);
+}
+.hero-cta:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(44,95,45,.3); }
+.hero-micro {
+    font-size:.8em; color:var(--gray); margin-top:12px;
+}
+
+/* ══ Pain Point ══ */
+.pain { background:var(--paper); }
+.pain-list {
+    margin-top:36px;
+    display:flex; flex-direction:column; gap:16px;
+}
+.pain-item {
+    background:var(--warm);
+    border-radius:8px;
+    padding:22px 26px;
+    font-size:.95em; color:var(--ink-soft); line-height:1.8;
+    position:relative;
+    padding-left:52px;
+}
+.pain-item::before {
+    content:attr(data-icon);
+    position:absolute; left:20px; top:20px;
+    font-size:1.2em;
+}
+.pain-empathy {
+    margin-top:32px;
+    background:var(--accent-light);
+    border-left:3px solid var(--accent);
+    border-radius:0 8px 8px 0;
+    padding:24px 28px;
+    font-size:.95em; color:var(--ink-soft); line-height:1.9;
+}
+.pain-empathy strong { color:var(--accent); font-weight:700; }
+
+/* ══ Solution ══ */
+.solution { background:var(--warm); }
+.solution-grid {
+    margin-top:40px;
+    display:grid; grid-template-columns:1fr;
+    gap:20px;
+}
+.sol-card {
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:32px 28px;
+    transition:box-shadow .2s;
+}
+.sol-card:hover { box-shadow:0 4px 20px rgba(0,0,0,.06); }
+.sol-num {
+    display:inline-block;
+    background:var(--accent); color:#fff;
+    font-size:.7em; font-weight:800;
+    width:26px; height:26px; line-height:26px;
+    text-align:center; border-radius:50%;
+    margin-bottom:14px;
+}
+.sol-card h3 {
+    font-size:1.05em; font-weight:800; color:var(--ink);
+    margin-bottom:10px; letter-spacing:-.3px;
+}
+.sol-card p {
+    font-size:.92em; color:var(--ink-soft); line-height:1.85;
+}
+.sol-quote {
+    margin-top:36px;
+    text-align:center;
+    font-size:1.1em; font-weight:700; color:var(--accent);
+    line-height:1.7;
+    padding:28px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+}
+
+/* ══ How We Work ══ */
+.process { background:var(--paper); }
+.step-list {
+    margin-top:40px;
+    display:flex; flex-direction:column; gap:0;
+    position:relative;
+}
+.step-list::before {
+    content:'';
+    position:absolute; left:18px; top:36px; bottom:36px;
+    width:2px; background:var(--line);
+}
+.step {
+    display:flex; gap:22px; padding:24px 0;
+    position:relative;
+}
+.step-dot {
+    flex-shrink:0;
+    width:38px; height:38px;
+    border-radius:50%;
+    background:var(--accent); color:#fff;
+    font-size:.78em; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+    position:relative; z-index:1;
+}
+.step-body h3 {
+    font-size:1em; font-weight:800; color:var(--ink);
+    margin-bottom:6px;
+}
+.step-body p {
+    font-size:.9em; color:var(--ink-soft); line-height:1.85;
+}
+.step-body .step-tag {
+    display:inline-block;
+    margin-top:8px;
+    font-size:.78em; font-weight:700;
+    color:var(--accent); background:var(--accent-light);
+    padding:3px 10px; border-radius:4px;
+}
+.process-note {
+    margin-top:40px;
+    background:var(--warm);
+    border-radius:10px;
+    padding:28px 28px;
+    font-size:.92em; color:var(--ink-soft); line-height:1.9;
+    text-align:center;
+}
+.process-note strong { color:var(--ink); }
+
+/* ══ CTA Section ══ */
+.cta-section {
+    background:var(--ink);
+    text-align:center;
+    padding:100px 0;
+}
+.cta-section .section-label { color:rgba(255,255,255,.4); }
+.cta-section h2 {
+    font-size:1.9em; font-weight:900; color:#fff;
+    line-height:1.4; margin-bottom:16px; letter-spacing:-.5px;
+}
+.cta-section p {
+    font-size:1em; color:rgba(255,255,255,.55); line-height:1.85;
+    max-width:460px; margin:0 auto 40px;
+}
+.cta-btn {
+    display:inline-block;
+    background:#fff; color:var(--ink);
+    border:none; border-radius:8px;
+    padding:18px 44px; font-size:1.05em; font-weight:800;
+    cursor:pointer; font-family:inherit;
+    transition:transform .2s, box-shadow .2s;
+    box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,0,0,.4); }
+.cta-micro {
+    font-size:.8em; color:rgba(255,255,255,.35); margin-top:14px;
+}
+
+/* ══ Footer ══ */
+footer {
+    background:var(--ink); border-top:1px solid rgba(255,255,255,.08);
+    padding:40px 24px; text-align:center;
+}
+.footer-brand { font-size:.9em; font-weight:700; color:rgba(255,255,255,.5); }
+.footer-copy { font-size:.78em; color:rgba(255,255,255,.25); margin-top:8px; }
+
+/* ══ Scroll Reveal ══ */
+.reveal {
+    opacity:0; transform:translateY(32px);
+    transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.on { opacity:1; transform:translateY(0); }
+
+/* ══ Responsive ══ */
+@media (max-width:600px) {
+    .hero { padding:130px 0 80px; }
+    .hero h1 { font-size:1.7em; }
+    .hero-sub { font-size:.95em; }
+    section { padding:72px 0; }
+    .section-title { font-size:1.4em; }
+    .cta-section h2 { font-size:1.4em; }
+    .sol-card { padding:24px 20px; }
+    .step { gap:16px; }
+    .step-list::before { left:18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 네비게이션 -->
+<nav>
+    <div class="nav-brand">브랜드<span>한장</span></div>
+    <button class="nav-cta" onclick="location.href='#contact'">상담 문의하기</button>
+</nav>
+
+<!-- ① Hero Section -->
+<section class="hero">
+    <div class="inner reveal">
+        <div class="hero-badge">상세페이지 해결사</div>
+        <h1>매출이 안 나오는 이유,<br><em>디자인이 아닙니다</em></h1>
+        <p class="hero-sub">
+            예쁜 상세페이지를 만들어도 매출이 그대로라면<br>
+            문제는 디자인이 아니라 <strong>사업의 구조</strong>입니다.<br>
+            15년 차 UX 기획자가 방향부터 잡아드립니다.
+        </p>
+        <button class="hero-cta" onclick="location.href='#contact'">무료 상담 신청하기</button>
+        <p class="hero-micro">부담 없이 편하게 이야기 나눠보세요</p>
+    </div>
+</section>
+
+<!-- ② Pain Point (공감대 형성) -->
+<section class="pain" id="pain">
+    <div class="inner reveal">
+        <div class="section-label">PAIN POINT</div>
+        <h2 class="section-title">혹시 이런 고민,<br>하고 계시지 않나요?</h2>
+        <div class="pain-list">
+            <div class="pain-item" data-icon="😣">
+                상세페이지를 만들고 싶은데, 뭘 어떻게 정리해서 전달해야 할지 모르겠다.
+            </div>
+            <div class="pain-item" data-icon="😟">
+                외주를 맡겼는데, 원하는 방향과 전혀 다른 결과물이 나왔다.
+            </div>
+            <div class="pain-item" data-icon="😶">
+                내 사업의 강점이 뭔지, 뭘 팔아야 하는지 사실 나도 정확히 모르겠다.
+            </div>
+            <div class="pain-item" data-icon="😩">
+                디자인은 예쁘게 나왔는데, 매출은 여전히 제자리다.
+            </div>
+        </div>
+        <div class="pain-empathy">
+            <strong>"저도 사장은 처음이라, 그 막막한 마음 잘 압니다."</strong><br><br>
+            처음 사업을 시작하면 모든 게 어렵습니다.<br>
+            뭘 물어야 하는지도, 어디서부터 시작해야 하는지도 모호하죠.<br>
+            그래서 저는 과하다 싶을 만큼 쉽게 풀어드립니다.<br>
+            어려운 말 없이, 대표님이 이해될 때까지.
+        </div>
+    </div>
+</section>
+
+<!-- ③ Solution & Differentiation -->
+<section class="solution" id="solution">
+    <div class="inner reveal">
+        <div class="section-label">SOLUTION</div>
+        <h2 class="section-title">디자인 전에,<br>사업의 구조를 먼저 봅니다</h2>
+        <p class="section-desc">
+            예쁜 페이지는 누구나 만들 수 있습니다.<br>
+            하지만 <strong>팔리는 페이지</strong>는 사업을 이해해야만 만들 수 있습니다.
+        </p>
+        <div class="solution-grid">
+            <div class="sol-card">
+                <div class="sol-num">1</div>
+                <h3>결과물보다 '구조'를 먼저</h3>
+                <p>
+                    바로 디자인부터 시작하지 않습니다.
+                    대표님의 사업이 어떤 구조로 돌아가는지,
+                    고객이 왜 사야 하는지를 먼저 정리합니다.
+                    구조가 잡히면 상세페이지는 자연스럽게 따라옵니다.
+                </p>
+            </div>
+            <div class="sol-card">
+                <div class="sol-num">2</div>
+                <h3>속도보다 '이해'를 먼저</h3>
+                <p>
+                    빠르게 만들어서 빠르게 넘기지 않습니다.
+                    대표님이 원하는 게 무엇인지,
+                    고객에게 전해야 할 것이 무엇인지를
+                    서로 충분히 이해한 뒤에 시작합니다.
+                </p>
+            </div>
+            <div class="sol-card">
+                <div class="sol-num">3</div>
+                <h3>디자인보다 '방향'을 먼저</h3>
+                <p>
+                    15년간 IT 현장에서 직접 기획하고, 직접 팔아봤습니다.
+                    디자인만으로는 부족하다는 것을 경험으로 압니다.
+                    방향이 맞아야 디자인이 힘을 발휘합니다.
+                </p>
+            </div>
+        </div>
+        <div class="sol-quote">
+            "대표님의 사업이 대표님께 더 선명해지는 순간,<br>
+            그것이 제가 드릴 수 있는 최고의 결과입니다."
+        </div>
+    </div>
+</section>
+
+<!-- ④ How We Work -->
+<section class="process" id="process">
+    <div class="inner reveal">
+        <div class="section-label">HOW WE WORK</div>
+        <h2 class="section-title">처음엔 천천히,<br>한번 맞추면 놀랍도록 편하게</h2>
+        <p class="section-desc">
+            일을 대신 해주는 사람이 아니라,<br>
+            <strong>사업 구조를 같이 보는 파트너</strong>입니다.
+        </p>
+        <div class="step-list">
+            <div class="step">
+                <div class="step-dot">01</div>
+                <div class="step-body">
+                    <h3>상담 & 사업 이해</h3>
+                    <p>대표님의 사업 상황, 고민, 목표를 듣습니다. 이 단계에서 가장 많은 시간을 씁니다. 서로를 이해하는 시간이 가장 중요하니까요.</p>
+                    <span class="step-tag">무료 상담</span>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-dot">02</div>
+                <div class="step-body">
+                    <h3>금액 / 일정 / 역할 정렬</h3>
+                    <p>비용, 기간, 어디까지 해드릴 수 있는지를 투명하게 정리합니다. 이 과정이 있어야 나중에 서로 편합니다.</p>
+                    <span class="step-tag">투명한 견적</span>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-dot">03</div>
+                <div class="step-body">
+                    <h3>구조 설계 & 카피 기획</h3>
+                    <p>사업의 핵심 가치, 고객이 반응할 포인트, 페이지의 흐름을 설계합니다. 디자인은 이 구조 위에 얹힙니다.</p>
+                    <span class="step-tag">핵심 단계</span>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-dot">04</div>
+                <div class="step-body">
+                    <h3>상세페이지 제작 & 피드백</h3>
+                    <p>설계한 구조를 바탕으로 상세페이지를 제작합니다. 피드백은 언제든 편하게. 한 번 맞춰진 호흡은 오래갑니다.</p>
+                    <span class="step-tag">완성</span>
+                </div>
+            </div>
+        </div>
+        <div class="process-note">
+            처음엔 정리하고 맞추느라 <strong>조금 느릴 수 있습니다.</strong><br>
+            하지만 한 번 호흡이 맞으면,<br>
+            <strong>"이렇게 편한 사람은 처음"</strong>이라는 말을 듣습니다.
+        </div>
+    </div>
+</section>
+
+<!-- ⑤ CTA Section -->
+<section class="cta-section" id="contact">
+    <div class="inner reveal">
+        <div class="section-label">CONTACT</div>
+        <h2>사업이 선명해지는 대화,<br>한번 나눠보시겠어요?</h2>
+        <p>
+            상담은 무료입니다.<br>
+            부담 갖지 마시고, 지금 고민되는 것부터 편하게 말씀해주세요.
+        </p>
+        <button class="cta-btn" onclick="window.open('https://open.kakao.com/', '_blank')">상담 문의하기</button>
+        <p class="cta-micro">카카오톡 오픈채팅으로 연결됩니다 / 영업일 기준 24시간 내 답변</p>
+    </div>
+</section>
+
+<!-- 푸터 -->
+<footer>
+    <div class="footer-brand">브랜드한장 — 상세페이지 해결사</div>
+    <p class="footer-copy">&copy; 2026 브랜드한장. All rights reserved.</p>
+</footer>
+
+<script>
+/* ── Scroll Reveal ── */
+const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── Smooth scroll for nav ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior:'smooth' });
+    });
+});
+</script>
+</body>
+</html>
