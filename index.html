@@ -153,20 +153,24 @@ section { padding:100px 0; }
     transition:box-shadow .2s;
 }
 .sol-card:hover { box-shadow:0 4px 20px rgba(0,0,0,.06); }
+.sol-header {
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:12px;
+}
 .sol-num {
-    display:inline-block;
+    display:inline-flex; align-items:center; justify-content:center;
+    flex-shrink:0;
     background:var(--accent); color:#fff;
     font-size:.7em; font-weight:800;
-    width:26px; height:26px; line-height:26px;
-    text-align:center; border-radius:50%;
-    margin-bottom:14px;
+    width:26px; height:26px;
+    border-radius:50%;
 }
 .sol-card h3 {
-    font-size:1.05em; font-weight:800; color:var(--ink);
-    margin-bottom:10px; letter-spacing:-.3px;
+    font-size:1.155em; font-weight:800; color:var(--ink);
+    letter-spacing:-.3px;
 }
 .sol-card p {
-    font-size:.92em; color:var(--ink-soft); line-height:1.85;
+    font-size:1.012em; color:var(--ink-soft); line-height:1.85;
 }
 .sol-quote {
     margin-top:36px;
@@ -348,8 +352,7 @@ footer {
         </p>
         <div class="solution-grid">
             <div class="sol-card">
-                <div class="sol-num">1</div>
-                <h3>결과물보다 '구조'를 먼저</h3>
+                <div class="sol-header"><div class="sol-num">1</div><h3>결과물보다 '구조'를 먼저</h3></div>
                 <p>
                     바로 디자인부터 시작하지 않습니다.
                     대표님의 사업이 어떤 구조로 돌아가는지,
@@ -358,8 +361,7 @@ footer {
                 </p>
             </div>
             <div class="sol-card">
-                <div class="sol-num">2</div>
-                <h3>속도보다 '이해'를 먼저</h3>
+                <div class="sol-header"><div class="sol-num">2</div><h3>속도보다 '이해'를 먼저</h3></div>
                 <p>
                     빠르게 만들어서 빠르게 넘기지 않습니다.
                     대표님이 원하는 게 무엇인지,
@@ -368,8 +370,7 @@ footer {
                 </p>
             </div>
             <div class="sol-card">
-                <div class="sol-num">3</div>
-                <h3>디자인보다 '방향'을 먼저</h3>
+                <div class="sol-header"><div class="sol-num">3</div><h3>디자인보다 '방향'을 먼저</h3></div>
                 <p>
                     15년간 IT 현장에서 직접 기획하고, 직접 팔아봤습니다.
                     디자인만으로는 부족하다는 것을 경험으로 압니다.
